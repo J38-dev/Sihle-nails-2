@@ -1,0 +1,3768 @@
+/* =========================================================
+   SIHLE NAILS
+   COMPLETE WEBSITE DESIGN SYSTEM
+   PART 1 — FOUNDATION / HEADER / HERO
+   ========================================================= */
+
+
+/* =========================================================
+   01. ROOT VARIABLES
+   ========================================================= */
+
+:root {
+  /* MASTER COLOURS */
+  --white: #ffffff;
+  --white-soft: #fffafb;
+  --pink-50: #fff5f8;
+  --pink-100: #ffe8ef;
+  --pink-200: #fbd1dc;
+  --pink-300: #f3a9bb;
+  --pink-400: #e986a2;
+  --pink-500: #d95f80;
+  --pink-600: #c9466a;
+  --pink-700: #a92f52;
+
+  /* VERY SMALL GOLD ACCENT */
+  --gold: #c7a45b;
+  --gold-soft: #ead9ad;
+
+  /* TEXT */
+  --text: #252126;
+  --text-soft: #625961;
+  --text-light: #8a7e85;
+
+  /* BORDERS */
+  --border: rgba(201, 70, 106, 0.14);
+  --border-dark: rgba(37, 33, 38, 0.1);
+
+  /* SHADOWS */
+  --shadow-soft: 0 12px 40px rgba(80, 35, 50, 0.07);
+  --shadow-medium: 0 20px 60px rgba(80, 35, 50, 0.11);
+  --shadow-button: 0 12px 30px rgba(201, 70, 106, 0.2);
+
+  /* RADIUS */
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+  --radius-xl: 36px;
+
+  /* WIDTH */
+  --container: 1240px;
+  --page-padding: 20px;
+
+  /* TRANSITIONS */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* =========================================================
+   02. RESET
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  background: var(--white);
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  background: var(--white);
+  color: var(--text);
+  font-family: "Manrope", sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+main {
+  display: block;
+  width: 100%;
+  background: var(--white);
+}
+
+section {
+  width: 100%;
+  position: relative;
+  background: var(--white);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+}
+
+::selection {
+  background: var(--pink-300);
+  color: var(--white);
+}
+
+
+/* =========================================================
+   03. GLOBAL SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--white);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--pink-300);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--pink-500);
+}
+
+
+/* =========================================================
+   04. PAGE LOADER
+   ========================================================= */
+
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--white);
+
+  opacity: 1;
+  visibility: visible;
+
+  transition:
+    opacity 0.7s var(--ease),
+    visibility 0.7s var(--ease);
+}
+
+.page-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.loader-mark {
+  position: relative;
+
+  width: 42px;
+  height: 42px;
+
+  border: 1px solid var(--pink-200);
+  border-radius: 50%;
+}
+
+.loader-mark::before {
+  content: "";
+
+  position: absolute;
+  inset: 6px;
+
+  border: 2px solid transparent;
+  border-top-color: var(--pink-500);
+  border-right-color: var(--pink-300);
+
+  border-radius: 50%;
+
+  animation: loaderSpin 1s linear infinite;
+}
+
+.loader-mark::after {
+  content: "";
+
+  position: absolute;
+
+  width: 5px;
+  height: 5px;
+
+  top: 50%;
+  left: 50%;
+
+  background: var(--gold);
+  border-radius: 50%;
+
+  transform: translate(-50%, -50%);
+}
+
+.loader-text {
+  font-family: "Manrope", sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  color: var(--pink-600);
+}
+
+@keyframes loaderSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   05. SITE HEADER
+   ========================================================= */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 1000;
+
+  width: 100%;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  border-bottom: 1px solid rgba(201, 70, 106, 0.08);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.site-header.scrolled {
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 8px 30px rgba(80, 35, 50, 0.06);
+  border-bottom-color: var(--border);
+}
+
+.header-inner {
+  width: min(100%, var(--container));
+  min-height: 70px;
+
+  margin: 0 auto;
+  padding: 10px var(--page-padding);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+
+/* =========================================================
+   06. BRAND
+   ========================================================= */
+
+.brand {
+  display: flex;
+  align-items: center;
+
+  min-width: 0;
+
+  transition: transform 0.3s var(--ease);
+}
+
+.brand:hover {
+  transform: translateY(-1px);
+}
+
+.brand-logo {
+  width: auto;
+  height: 38px;
+  max-width: 145px;
+
+  object-fit: contain;
+}
+
+
+/* =========================================================
+   07. DESKTOP NAVIGATION
+   ========================================================= */
+
+.desktop-nav {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+
+  margin-left: auto;
+  margin-right: 28px;
+}
+
+.desktop-nav a {
+  position: relative;
+
+  padding: 8px 0;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  color: var(--text-soft);
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.desktop-nav a::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  bottom: 1px;
+
+  width: 0;
+  height: 1px;
+
+  background: var(--pink-500);
+
+  transition: width 0.3s var(--ease);
+}
+
+.desktop-nav a:hover {
+  color: var(--pink-600);
+}
+
+.desktop-nav a:hover::after {
+  width: 100%;
+}
+
+
+/* =========================================================
+   08. HEADER BOOK BUTTON
+   ========================================================= */
+
+.header-book {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 40px;
+  padding: 0 15px;
+
+  border-radius: 999px;
+
+  background: var(--pink-600);
+  color: var(--white);
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  box-shadow: 0 8px 20px rgba(201, 70, 106, 0.18);
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s var(--ease),
+    box-shadow 0.25s ease;
+}
+
+.header-book span {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.header-book:hover {
+  background: var(--pink-700);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-button);
+}
+
+.header-book:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   09. MOBILE MENU BUTTON
+   ========================================================= */
+
+.menu-toggle {
+  position: relative;
+
+  width: 42px;
+  height: 42px;
+
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  background: var(--pink-50);
+  border: 1px solid var(--pink-100);
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.menu-toggle span {
+  display: block;
+
+  width: 17px;
+  height: 1.5px;
+
+  background: var(--pink-600);
+
+  transition:
+    transform 0.35s var(--ease),
+    opacity 0.25s ease;
+}
+
+.menu-toggle:hover {
+  background: var(--pink-100);
+}
+
+.menu-toggle[aria-expanded="true"] span:first-child {
+  transform: translateY(4.25px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] span:last-child {
+  transform: translateY(-4.25px) rotate(-45deg);
+}
+
+
+/* =========================================================
+   10. MOBILE NAVIGATION
+   ========================================================= */
+
+.mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+
+  overflow: hidden;
+
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+
+  background: var(--white);
+
+  border-bottom: 1px solid transparent;
+
+  transition:
+    max-height 0.5s var(--ease),
+    opacity 0.35s ease,
+    visibility 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.mobile-menu.open,
+.mobile-menu.active {
+  max-height: 420px;
+  opacity: 1;
+  visibility: visible;
+
+  border-bottom-color: var(--border);
+  box-shadow: 0 18px 35px rgba(80, 35, 50, 0.08);
+}
+
+.mobile-menu-inner {
+  padding: 18px var(--page-padding) 22px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.mobile-link {
+  display: flex;
+  align-items: center;
+
+  min-height: 52px;
+  padding: 0 4px;
+
+  border-bottom: 1px solid var(--border);
+
+  color: var(--text);
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: 27px;
+  font-weight: 600;
+
+  transition:
+    color 0.25s ease,
+    padding-left 0.3s var(--ease);
+}
+
+.mobile-link:hover {
+  color: var(--pink-600);
+  padding-left: 8px;
+}
+
+.mobile-book {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 54px;
+
+  margin-top: 12px;
+  padding: 0 18px;
+
+  border-radius: 14px;
+
+  background: var(--pink-600);
+  color: var(--white);
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  box-shadow: var(--shadow-button);
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s var(--ease);
+}
+
+.mobile-book span {
+  font-size: 18px;
+}
+
+.mobile-book:hover {
+  background: var(--pink-700);
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   11. HERO
+   ========================================================= */
+
+.hero {
+  position: relative;
+
+  min-height: 100svh;
+
+  display: flex;
+  align-items: flex-end;
+
+  overflow: hidden;
+
+  background: var(--white);
+}
+
+.hero-image {
+  position: absolute;
+  inset: 0;
+
+  overflow: hidden;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  transform: scale(1.01);
+
+  animation: heroImageIn 1.4s var(--ease) both;
+}
+
+@keyframes heroImageIn {
+  from {
+    opacity: 0;
+    transform: scale(1.07);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1.01);
+  }
+}
+
+
+/* =========================================================
+   12. HERO OVERLAY
+   ========================================================= */
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+
+  /*
+    Kept light and elegant.
+    No black block over the hero.
+  */
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.04) 0%,
+      rgba(255, 255, 255, 0.08) 38%,
+      rgba(255, 245, 248, 0.5) 72%,
+      rgba(255, 255, 255, 0.96) 100%
+    );
+}
+
+
+/* =========================================================
+   13. HERO CONTENT
+   ========================================================= */
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+
+  padding:
+    130px
+    var(--page-padding)
+    78px;
+
+  text-align: center;
+}
+
+.hero-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  margin-bottom: 18px;
+
+  color: var(--pink-700);
+
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.kicker-line {
+  width: 25px;
+  height: 1px;
+
+  background: var(--pink-400);
+}
+
+.hero h1 {
+  max-width: 700px;
+
+  margin: 0 auto;
+
+  color: var(--text);
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(55px, 16vw, 105px);
+  font-weight: 500;
+  line-height: 0.82;
+  letter-spacing: -0.055em;
+}
+
+.hero h1 span {
+  display: block;
+
+  color: var(--pink-600);
+
+  font-style: italic;
+  font-weight: 500;
+}
+
+.hero-description {
+  max-width: 420px;
+
+  margin: 25px auto 0;
+
+  color: var(--text-soft);
+
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   14. HERO BUTTONS
+   ========================================================= */
+
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  width: 100%;
+  max-width: 360px;
+
+  margin: 28px auto 0;
+}
+
+.primary-button,
+.secondary-button {
+  min-height: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+
+  padding: 0 20px;
+
+  border-radius: 999px;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+
+  transition:
+    transform 0.3s var(--ease),
+    box-shadow 0.3s ease,
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+.primary-button {
+  background: var(--pink-600);
+  color: var(--white);
+
+  box-shadow: var(--shadow-button);
+}
+
+.primary-button i {
+  font-size: 11px;
+}
+
+.primary-button:hover {
+  background: var(--pink-700);
+  transform: translateY(-3px);
+  box-shadow: 0 18px 38px rgba(201, 70, 106, 0.24);
+}
+
+.secondary-button {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--pink-700);
+
+  border: 1px solid var(--pink-200);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.secondary-button i {
+  font-size: 10px;
+}
+
+.secondary-button:hover {
+  background: var(--pink-50);
+  transform: translateY(-3px);
+}
+
+
+/* =========================================================
+   15. HERO META
+   ========================================================= */
+
+.hero-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  max-width: 560px;
+
+  margin: 34px auto 0;
+
+  padding-top: 20px;
+
+  border-top: 1px solid rgba(201, 70, 106, 0.18);
+}
+
+.hero-meta > div {
+  position: relative;
+
+  padding: 0 9px;
+}
+
+.hero-meta > div + div::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 3px;
+  bottom: 3px;
+
+  width: 1px;
+
+  background: rgba(201, 70, 106, 0.16);
+}
+
+.hero-meta strong {
+  display: block;
+
+  color: var(--text);
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.hero-meta span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: var(--text-light);
+
+  font-size: 7px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   16. HERO SCROLL INDICATOR
+   ========================================================= */
+
+.hero-scroll {
+  position: absolute;
+  z-index: 3;
+
+  right: 18px;
+  bottom: 25px;
+
+  display: none;
+  align-items: center;
+  gap: 10px;
+
+  color: var(--pink-600);
+
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+
+  writing-mode: vertical-rl;
+}
+
+.hero-scroll i {
+  font-size: 10px;
+
+  animation: scrollBounce 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+
+/* =========================================================
+   17. ACCESSIBILITY
+   ========================================================= */
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--pink-500);
+  outline-offset: 4px;
+}
+
+
+/* =========================================================
+   18. SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 359px) {
+  :root {
+    --page-padding: 16px;
+  }
+
+  .header-inner {
+    min-height: 64px;
+  }
+
+  .brand-logo {
+    height: 33px;
+    max-width: 125px;
+  }
+
+  .header-book {
+    min-height: 37px;
+    padding: 0 12px;
+    font-size: 9px;
+  }
+
+  .menu-toggle {
+    width: 38px;
+    height: 38px;
+  }
+
+  .hero-content {
+    padding-top: 110px;
+    padding-bottom: 68px;
+  }
+
+  .hero h1 {
+    font-size: 51px;
+  }
+
+  .hero-description {
+    font-size: 12px;
+  }
+
+  .hero-actions {
+    margin-top: 23px;
+  }
+
+  .primary-button,
+  .secondary-button {
+    min-height: 50px;
+  }
+
+  .hero-meta {
+    margin-top: 27px;
+  }
+
+  .hero-meta strong {
+    font-size: 8px;
+  }
+
+  .hero-meta span {
+    font-size: 6.5px;
+  }
+}
+
+
+/* =========================================================
+   19. TABLET
+   ========================================================= */
+
+@media (min-width: 700px) {
+  :root {
+    --page-padding: 32px;
+  }
+
+  .header-inner {
+    min-height: 78px;
+  }
+
+  .brand-logo {
+    height: 42px;
+    max-width: 165px;
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  .desktop-nav {
+    display: flex;
+  }
+
+  .hero {
+    min-height: 850px;
+  }
+
+  .hero-content {
+    padding:
+      170px
+      var(--page-padding)
+      90px;
+  }
+
+  .hero h1 {
+    font-size: clamp(78px, 11vw, 120px);
+  }
+
+  .hero-description {
+    font-size: 14px;
+  }
+
+  .hero-actions {
+    flex-direction: row;
+    max-width: 600px;
+  }
+
+  .primary-button,
+  .secondary-button {
+    flex: 1;
+  }
+
+  .hero-scroll {
+    display: flex;
+  }
+}
+
+
+/* =========================================================
+   20. DESKTOP HEADER / HERO
+   ========================================================= */
+
+@media (min-width: 1024px) {
+  :root {
+    --page-padding: 42px;
+  }
+
+  .header-inner {
+    min-height: 84px;
+  }
+
+  .brand-logo {
+    height: 45px;
+    max-width: 180px;
+  }
+
+  .header-book {
+    min-height: 44px;
+    padding: 0 20px;
+
+    font-size: 10px;
+  }
+
+  .hero {
+    min-height: 100svh;
+  }
+
+  .hero-content {
+    padding-top: 190px;
+    padding-bottom: 105px;
+
+    text-align: left;
+  }
+
+  .hero-kicker {
+    justify-content: flex-start;
+  }
+
+  .hero h1 {
+    margin-left: 0;
+    margin-right: 0;
+
+    font-size: clamp(95px, 10vw, 150px);
+  }
+
+  .hero-description {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .hero-actions {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .hero-meta {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .hero-scroll {
+    right: 35px;
+    bottom: 35px;
+  }
+}
+
+
+/* =========================================================
+   21. LARGE DESKTOP
+   ========================================================= */
+
+@media (min-width: 1400px) {
+  :root {
+    --page-padding: 55px;
+  }
+
+  .hero-content {
+    padding-bottom: 120px;
+  }
+
+  .hero h1 {
+    font-size: 150px;
+  }
+}
+
+
+/* =========================================================
+   22. REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================================
+   SIHLE NAILS
+   PART 2 — VALUE STRIP + SERVICES
+   ========================================================= */
+
+
+/* =========================================================
+   23. VALUE STRIP
+   ========================================================= */
+
+.value-strip {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 1fr;
+
+  background: var(--white);
+
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+
+/* Individual value item */
+
+.value-item {
+  min-height: 92px;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 20px var(--page-padding);
+
+  background: var(--white);
+
+  transition:
+    background 0.3s ease,
+    transform 0.3s var(--ease);
+}
+
+.value-item + .value-item {
+  border-top: 1px solid var(--border);
+}
+
+.value-item:hover {
+  background: var(--pink-50);
+}
+
+
+}
+
+
+
+
+
+
+
+transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.value-item:hover .value-number {
+  background: var(--pink-600);
+  border-color: var(--pink-600);
+  color: var(--white);
+}
+
+
+/* Text */
+
+.value-item > div {
+  min-width: 0;
+}
+
+.value-item strong {
+  display: block;
+
+  color: var(--text);
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}
+
+.value-item p {
+  margin: 3px 0 0;
+
+  color: var(--text-light);
+
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   24. SERVICES SECTION
+   ========================================================= */
+
+.services-section {
+  position: relative;
+
+  width: 100%;
+
+  padding:
+    82px
+    var(--page-padding)
+    78px;
+
+  background: var(--white);
+
+  overflow: hidden;
+}
+
+
+/*
+   Soft decorative pink detail.
+   Very subtle so the master background stays WHITE.
+*/
+
+.services-section::before {
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  top: 40px;
+  right: -100px;
+
+  border: 1px solid var(--pink-100);
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.services-section::after {
+  content: "";
+
+  position: absolute;
+
+  width: 8px;
+  height: 8px;
+
+  top: 105px;
+  right: 45px;
+
+  border-radius: 50%;
+
+  background: var(--gold);
+
+  opacity: 0.45;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   25. GENERAL SECTION HEADING
+   ========================================================= */
+
+.section-heading {
+  position: relative;
+  z-index: 1;
+
+  max-width: 600px;
+
+  margin: 0 auto 42px;
+
+  text-align: center;
+}
+
+
+/* Eyebrow */
+
+.eyebrow {
+
+
+
+  
+/* =========================================================
+   26. SERVICE GRID
+   ========================================================= */
+
+.service-grid {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: 1240px;
+
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 1fr;
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   27. SERVICE CARD
+   ========================================================= */
+
+.service-card {
+  position: relative;
+
+  width: 100%;
+
+  overflow: hidden;
+
+  background: var(--white);
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-soft);
+
+  transition:
+    transform 0.45s var(--ease),
+    box-shadow 0.45s var(--ease),
+    border-color 0.35s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-7px);
+
+  border-color: var(--pink-200);
+
+  box-shadow: var(--shadow-medium);
+}
+
+
+/* Featured service */
+
+.featured-service {
+  border-color: var(--pink-300);
+
+  box-shadow:
+    0 18px 50px rgba(201, 70, 106, 0.11);
+}
+
+
+/* =========================================================
+   28. SERVICE NUMBER
+   ========================================================= */
+
+.service-number {
+  position: absolute;
+  z-index: 4;
+
+  top: 15px;
+  left: 15px;
+
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  border: 1px solid var(--pink-200);
+
+  color: var(--pink-600);
+
+  font-size: 8px;
+  font-weight: 800;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+
+/* =========================================================
+   29. SERVICE IMAGE
+   ========================================================= */
+
+.service-image {
+  position: relative;
+
+  width: 100%;
+
+  height: 300px;
+
+  overflow: hidden;
+
+  background: var(--pink-50);
+}
+
+.service-image::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.02),
+      rgba(255, 255, 255, 0.1)
+    );
+
+  pointer-events: none;
+}
+
+.service-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  transition:
+    transform 0.8s var(--ease),
+    filter 0.5s ease;
+}
+
+.service-card:hover .service-image img {
+  transform: scale(1.06);
+}
+
+
+/* =========================================================
+   30. SERVICE CONTENT
+   ========================================================= */
+
+.service-content {
+  min-height: 190px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 24px 21px 21px;
+
+  background: var(--white);
+}
+
+
+/* Label */
+
+.service-label {
+  display: inline-block;
+
+  margin-bottom: 7px;
+
+  color: var(--pink-500);
+
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+
+/* Service heading */
+
+.service-content h3 {
+  margin: 0;
+
+  color: var(--text);
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: 39px;
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+
+  transition: color 0.25s ease;
+}
+
+.service-card:hover .service-content h3 {
+  color: var(--pink-600);
+}
+
+
+/* Service description */
+
+.service-content p {
+  margin: 8px 0 0;
+
+  color: var(--text-soft);
+
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   31. SERVICE LINK
+   ========================================================= */
+
+.service-link {
+  align-self: flex-start;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-top: 20px;
+
+  padding-bottom: 5px;
+
+  border-bottom: 1px solid var(--pink-300);
+
+  color: var(--pink-600);
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  transition:
+    color 0.25s ease,
+    gap 0.3s var(--ease),
+    border-color 0.25s ease;
+}
+
+.service-link span {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.service-link:hover {
+  gap: 13px;
+
+  color: var(--pink-700);
+
+  border-color: var(--gold);
+}
+
+
+/* =========================================================
+   32. FEATURED SERVICE DETAILS
+   ========================================================= */
+
+.featured-service::before {
+  content: "FAVOURITE";
+
+  position: absolute;
+  z-index: 5;
+
+  top: 15px;
+  right: 15px;
+
+  min-height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 12px;
+
+  border-radius: 999px;
+
+  background: var(--pink-600);
+  color: var(--white);
+
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}
+
+
+/* =========================================================
+   33. SERVICES FOOTER
+   ========================================================= */
+
+.services-footer {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: 1240px;
+
+  margin: 32px auto 0;
+
+  padding-top: 22px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  border-top: 1px solid var(--border);
+}
+
+
+/* Starting price */
+
+.services-footer > span {
+  color: var(--text-light);
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+
+/* Explore services */
+
+.services-footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  color: var(--text);
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  transition:
+    color 0.25s ease,
+    gap 0.3s var(--ease);
+}
+
+.services-footer a span {
+  color: var(--pink-600);
+  font-size: 15px;
+}
+
+.services-footer a:hover {
+  color: var(--pink-600);
+  gap: 13px;
+}
+
+
+/* =========================================================
+   34. MOBILE SERVICE POLISH
+   ========================================================= */
+
+@media (max-width: 699px) {
+
+  .services-section {
+    padding-top: 72px;
+  }
+
+  .section-heading {
+    padding: 0 4px;
+  }
+
+  .section-heading h2 {
+    font-size: clamp(49px, 14vw, 70px);
+  }
+
+  .section-heading p {
+    font-size: 12px;
+  }
+
+  .service-grid {
+    gap: 16px;
+  }
+
+  .service-card {
+    border-radius: 22px;
+  }
+
+  .service-image {
+    height: min(78vw, 360px);
+  }
+
+  .service-content {
+    min-height: 184px;
+  }
+}
+
+
+/* =========================================================
+   35. TABLET SERVICES
+   ========================================================= */
+
+@media (min-width: 700px) {
+
+  .value-strip {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .value-item {
+    min-height: 105px;
+    padding: 22px 25px;
+  }
+
+  .value-item + .value-item {
+    border-top: 0;
+    border-left: 1px solid var(--border);
+  }
+
+  .services-section {
+    padding-top: 105px;
+    padding-bottom: 100px;
+  }
+
+  .section-heading {
+    margin-bottom: 55px;
+  }
+
+  .section-heading h2 {
+    font-size: clamp(60px, 8vw, 90px);
+  }
+
+  .section-heading p {
+    font-size: 14px;
+  }
+
+  .service-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+
+  .service-card:last-child {
+    grid-column: 1 / -1;
+
+    max-width: calc(50% - 11px);
+
+    margin: 0 auto;
+  }
+
+  .service-image {
+    height: 360px;
+  }
+
+  .service-content {
+    min-height: 205px;
+    padding: 27px 25px 24px;
+  }
+
+  .service-content h3 {
+    font-size: 45px;
+  }
+
+  .services-footer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 40px;
+  }
+}
+
+
+/* =========================================================
+   36. DESKTOP SERVICES
+   ========================================================= */
+
+@media (min-width: 1024px) {
+
+  .value-item {
+    min-height: 115px;
+
+    padding-left: 35px;
+    padding-right: 35px;
+  }
+
+  .value-number {
+    width: 40px;
+    height: 40px;
+  }
+
+  .services-section {
+    padding-top: 125px;
+    padding-bottom: 120px;
+  }
+
+  .section-heading {
+    margin-bottom: 65px;
+  }
+
+  .section-heading h2 {
+    font-size: clamp(75px, 7vw, 105px);
+  }
+
+  .service-grid {
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 24px;
+  }
+
+  .service-card:last-child {
+    grid-column: auto;
+
+    max-width: none;
+
+    margin: 0;
+  }
+
+  .service-image {
+    height: 390px;
+  }
+
+  .service-content {
+    min-height: 210px;
+
+    padding: 29px 27px 25px;
+  }
+
+  .service-content h3 {
+    font-size: 48px;
+  }
+
+  .services-footer {
+    margin-top: 45px;
+  }
+}
+
+
+/* =========================================================
+   37. LARGE DESKTOP SERVICES
+   ========================================================= */
+
+@media (min-width: 1400px) {
+
+  .service-grid {
+    gap: 28px;
+  }
+
+  .service-image {
+    height: 430px;
+  }
+
+  .service-content {
+    min-height: 220px;
+  }
+}
+
+/* =========================================================
+   SIHLE NAILS
+   PART 3 — OUR WORK / GALLERY / WHY SIHLE
+   ========================================================= */
+
+
+/* =========================================================
+   38. OUR WORK SECTION
+   ========================================================= */
+
+.work-section {
+  position: relative;
+
+  width: 100%;
+
+  padding:
+    78px
+    0
+    82px;
+
+  background: var(--white);
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   39. WORK HEADING
+   ========================================================= */
+
+.work-heading {
+  width: 100%;
+  max-width: 1240px;
+
+  margin: 0 auto 32px;
+
+  padding: 0 var(--page-padding);
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.work-heading .eyebrow {
+  margin-bottom: 12px;
+}
+
+.work-heading h2 {
+  max-width: 650px;
+
+  margin: 0;
+
+  color: var(--text);
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(47px, 12vw, 85px);
+  font-weight: 500;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+}
+
+.work-heading h2 em {
+  color: var(--pink-600);
+  font-style: italic;
+}
+
+
+/* =========================================================
+   40. DESKTOP GALLERY LINK
+   ========================================================= */
+
+.desktop-gallery-link {
+  display: none;
+
+  align-items: center;
+  gap: 10px;
+
+  flex-shrink: 0;
+
+  padding-bottom: 7px;
+
+  border-bottom: 1px solid var(--pink-300);
+
+  color: var(--text);
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  transition:
+    color 0.25s ease,
+    gap 0.3s var(--ease),
+    border-color 0.25s ease;
+}
+
+.desktop-gallery-link span {
+  color: var(--pink-600);
+
+  font-size: 15px;
+}
+
+.desktop-gallery-link:hover {
+  color: var(--pink-600);
+
+  gap: 14px;
+
+  border-color: var(--gold);
+}
+
+
+/* =========================================================
+   41. GALLERY TRACK
+   ========================================================= */
+
+.gallery-track {
+  width: 100%;
+
+  display: flex;
+  gap: 12px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  padding:
+    4px
+    var(--page-padding)
+    14px;
+
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+
+  scrollbar-width: none;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.gallery-track::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* =========================================================
+   42. GALLERY CARD
+   ========================================================= */
+
+.gallery-card {
+  position: relative;
+
+  flex: 0 0 78vw;
+
+  height: 430px;
+
+  overflow: hidden;
+
+  scroll-snap-align: start;
+
+  border-radius: 20px;
+
+  background: var(--pink-50);
+
+  border: 1px solid var(--pink-100);
+
+  box-shadow: var(--shadow-soft);
+
+  isolation: isolate;
+
+  transition:
+    transform 0.45s var(--ease),
+    box-shadow 0.45s var(--ease),
+    border-color 0.3s ease;
+}
+
+.gallery-card:hover {
+  transform: translateY(-5px);
+
+  border-color: var(--pink-200);
+
+  box-shadow: var(--shadow-medium);
+}
+
+
+/* =========================================================
+   43. GALLERY IMAGES
+   ========================================================= */
+
+.gallery-card img {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  transition:
+    transform 0.8s var(--ease),
+    filter 0.5s ease;
+}
+
+.gallery-card:hover img {
+  transform: scale(1.06);
+}
+
+
+/* =========================================================
+   44. GALLERY IMAGE OVERLAY
+   ========================================================= */
+
+.gallery-card::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(37, 33, 38, 0.46) 0%,
+      rgba(37, 33, 38, 0.12) 35%,
+      rgba(255, 255, 255, 0) 65%
+    );
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   45. GALLERY OVERLAY CONTENT
+   ========================================================= */
+
+.gallery-overlay {
+  position: absolute;
+
+  z-index: 2;
+
+  left: 18px;
+  right: 18px;
+  bottom: 17px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+
+  color: var(--white);
+}
+
+.gallery-overlay span {
+  width: 31px;
+  height: 31px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.65);
+
+  border-radius: 50%;
+
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.gallery-overlay strong {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+}
+
+
+/* =========================================================
+   46. GALLERY GOLD DETAIL
+   ========================================================= */
+
+.gallery-overlay strong::after {
+  content: "";
+
+  display: inline-block;
+
+  width: 5px;
+  height: 5px;
+
+  margin-left: 8px;
+
+  vertical-align: middle;
+
+  background: var(--gold);
+
+  border-radius: 50%;
+}
+
+
+/* =========================================================
+   47. TALL GALLERY CARDS
+   ========================================================= */
+
+.gallery-tall {
+  height: 480px;
+}
+
+
+/* =========================================================
+   48. MOBILE GALLERY BUTTON
+   ========================================================= */
+
+.mobile-gallery-button {
+  width: calc(100% - (var(--page-padding) * 2));
+
+  min-height: 54px;
+
+  margin: 19px auto 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  border: 1px solid var(--pink-200);
+  border-radius: 999px;
+
+  background: var(--white);
+
+  color: var(--pink-600);
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  box-shadow: 0 8px 25px rgba(80, 35, 50, 0.04);
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.3s var(--ease);
+}
+
+.mobile-gallery-button span {
+  font-size: 15px;
+}
+
+.mobile-gallery-button:hover {
+  background: var(--pink-600);
+
+  border-color: var(--pink-600);
+
+  color: var(--white);
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   49. GALLERY MOBILE HINT
+   ========================================================= */
+
+.work-section::after {
+  content: "SWIPE TO EXPLORE";
+
+  position: absolute;
+
+  right: var(--page-padding);
+  top: 172px;
+
+  color: var(--text-light);
+
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+
+  opacity: 0.75;
+}
+
+
+/* =========================================================
+   50. WHY SIHLE SECTION
+   ========================================================= */
+
+.why-section {
+  position: relative;
+
+  width: 100%;
+
+  padding:
+    84px
+    var(--page-padding)
+    86px;
+
+  background: var(--white);
+
+  border-top: 1px solid var(--border);
+
+  overflow: hidden;
+}
+
+
+/*
+   Very subtle decorative circle.
+   Background itself remains WHITE.
+*/
+
+.why-section::before {
+  content: "";
+
+  position: absolute;
+
+  width: 230px;
+  height: 230px;
+
+  right: -145px;
+  top: 45px;
+
+  border: 1px solid var(--pink-100);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.why-section::after {
+  content: "";
+
+  position: absolute;
+
+  width: 7px;
+  height: 7px;
+
+  right: 46px;
+  top: 155px;
+
+  background: var(--gold);
+
+  border-radius: 50%;
+
+  opacity: 0.5;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   51. WHY INTRO
+   ========================================================= */
+
+.why-intro {
+  position: relative;
+  z-index: 1;
+
+  max-width: 650px;
+
+  margin: 0 auto 47px;
+
+  text-align: center;
+}
+
+.why-intro .eyebrow {
+  margin-bottom: 13px;
+}
+
+.why-intro h2 {
+  margin: 0;
+
+  color: var(--text);
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(52px, 14vw, 90px);
+  font-weight: 500;
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+}
+
+.why-intro h2 em {
+  color: var(--pink-600);
+
+  font-style: italic;
+}
+
+.why-intro > p {
+  max-width: 460px;
+
+  margin: 20px auto 0;
+
+  color: var(--text-soft);
+
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   52. WHY LIST
+   ========================================================= */
+
+.why-list {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: 900px;
+
+  margin: 0 auto;
+
+  border-top: 1px solid var(--border);
+}
+
+
+/* =========================================================
+   53. WHY ITEM
+   ========================================================= */
+
+.why-item {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 42px 1fr;
+
+  gap: 17px;
+
+  padding:
+    25px
+    0;
+
+  border-bottom: 1px solid var(--border);
+
+  transition:
+    padding-left 0.4s var(--ease),
+    background 0.3s ease;
+}
+
+.why-item:hover {
+  padding-left: 8px;
+}
+
+
+/* =========================================================
+   54. WHY NUMBER
+   ========================================================= */
+
+.why-item > span {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--pink-200);
+
+  border-radius: 50%;
+
+  color: var(--pink-600);
+
+  font-size: 8px;
+  font-weight: 800;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.why-item:hover > span {
+  background: var(--pink-600);
+
+  border-color: var(--pink-600);
+
+  color: var(--white);
+}
+
+
+/* =========================================================
+   55. WHY CONTENT
+   ========================================================= */
+
+.why-item h3 {
+  margin: 1px 0 6px;
+
+  color: var(--text);
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+
+  transition: color 0.25s ease;
+}
+
+.why-item:hover h3 {
+  color: var(--pink-600);
+}
+
+.why-item p {
+  max-width: 530px;
+
+  margin: 0;
+
+  color: var(--text-soft);
+
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   56. WHY ITEM DECORATION
+   ========================================================= */
+
+.why-item div {
+  position: relative;
+}
+
+.why-item div::after {
+  content: "↗";
+
+  position: absolute;
+
+  right: 0;
+  top: 0;
+
+  color: var(--pink-300);
+
+  font-size: 16px;
+
+  opacity: 0;
+
+  transform: translateX(-5px);
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s var(--ease);
+}
+
+.why-item:hover div::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /* =========================================================
+   57. TABLET — OUR WORK
+   ========================================================= */
+
+@media (min-width: 700px) {
+
+  .work-section {
+    padding-top: 105px;
+    padding-bottom: 105px;
+  }
+
+  .work-heading {
+    margin-bottom: 42px;
+  }
+
+  .work-heading h2 {
+    font-size: clamp(65px, 8vw, 100px);
+  }
+
+  .desktop-gallery-link {
+    display: inline-flex;
+  }
+
+  .mobile-gallery-button {
+    display: none;
+  }
+
+  .work-section::after {
+    display: none;
+  }
+
+  .gallery-track {
+    display: grid;
+
+    grid-template-columns:
+      1.15fr
+      0.85fr
+      1.15fr
+      0.85fr;
+
+    gap: 16px;
+
+    overflow: visible;
+
+    padding:
+      4px
+      var(--page-padding)
+      4px;
+
+    scroll-snap-type: none;
+  }
+
+  .gallery-card,
+  .gallery-tall {
+    width: 100%;
+    height: 450px;
+
+    flex: none;
+  }
+
+  .gallery-tall {
+    height: 510px;
+  }
+
+  .gallery-card:nth-child(even) {
+    margin-top: 60px;
+  }
+
+  .why-section {
+    padding-top: 110px;
+    padding-bottom: 110px;
+  }
+
+  .why-intro {
+    margin-bottom: 65px;
+  }
+
+  .why-intro h2 {
+    font-size: clamp(70px, 8vw, 105px);
+  }
+
+  .why-intro > p {
+    font-size: 14px;
+  }
+
+  .why-item {
+    grid-template-columns: 55px 1fr;
+
+    padding:
+      32px
+      5px;
+  }
+
+  .why-item > span {
+    width: 38px;
+    height: 38px;
+  }
+
+  .why-item h3 {
+    font-size: 42px;
+  }
+
+  .why-item p {
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================================
+   58. DESKTOP — OUR WORK
+   ========================================================= */
+
+@media (min-width: 1024px) {
+
+  .work-section {
+    padding-top: 125px;
+    padding-bottom: 125px;
+  }
+
+  .work-heading {
+    margin-bottom: 50px;
+  }
+
+  .work-heading h2 {
+    font-size: clamp(80px, 7vw, 115px);
+  }
+
+  .gallery-track {
+    gap: 20px;
+  }
+
+  .gallery-card,
+  .gallery-tall {
+    height: 540px;
+
+    border-radius: 26px;
+  }
+
+  .gallery-tall {
+    height: 610px;
+  }
+
+  .gallery-card:nth-child(even) {
+    margin-top: 80px;
+  }
+
+  .gallery-overlay {
+    left: 23px;
+    right: 23px;
+    bottom: 22px;
+  }
+
+  .gallery-overlay span {
+    width: 36px;
+    height: 36px;
+  }
+
+  .gallery-overlay strong {
+    font-size: 10px;
+  }
+
+
+  /* WHY SECTION */
+
+  .why-section {
+    padding-top: 135px;
+    padding-bottom: 135px;
+  }
+
+  .why-intro {
+    margin-bottom: 78px;
+  }
+
+  .why-intro h2 {
+    font-size: clamp(90px, 8vw, 125px);
+  }
+
+  .why-item {
+    grid-template-columns: 65px 1fr;
+
+    min-height: 150px;
+
+    padding:
+      38px
+      10px;
+  }
+
+  .why-item > span {
+    width: 42px;
+    height: 42px;
+  }
+
+  .why-item h3 {
+    font-size: 48px;
+  }
+
+  .why-item p {
+    max-width: 600px;
+
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================================
+   59. LARGE DESKTOP
+   ========================================================= */
+
+@media (min-width: 1400px) {
+
+  .gallery-track {
+    gap: 24px;
+  }
+
+  .gallery-card,
+  .gallery-tall {
+    border-radius: 30px;
+  }
+
+  .gallery-card {
+    height: 590px;
+  }
+
+  .gallery-tall {
+    height: 670px;
+  }
+}
+
+
+/* =========================================================
+   60. TOUCH DEVICE SAFETY
+   ========================================================= */
+
+@media (hover: none) {
+
+  .gallery-card:hover,
+  .service-card:hover,
+  .why-item:hover {
+    transform: none;
+  }
+
+  .gallery-card:hover img,
+  .service-card:hover .service-image img {
+    transform: none;
+  }
+
+  .why-item:hover {
+    padding-left: 0;
+  }
+
+  .why-item:hover div::after {
+    opacity: 0;
+  }
+}
+
+/* =========================================================
+   SIHLE NAILS
+   PART 4 — BOOKING CTA / FINAL CTA / MOBILE BAR
+   ========================================================= */
+
+
+/* =========================================================
+   61. BOOKING CTA
+   ========================================================= */
+
+.booking-cta {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 600px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    90px
+    var(--page-padding);
+
+  background: var(--pink-600);
+
+  overflow: hidden;
+
+  isolation: isolate;
+}
+
+
+/* =========================================================
+   62. BOOKING CTA DECORATION
+   ========================================================= */
+
+/*
+   These are decorative elements only.
+   The section remains primarily pink,
+   while the rest of the website stays white.
+*/
+
+.booking-cta::before {
+  content: "";
+
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  top: -220px;
+  left: -190px;
+
+  border: 1px solid rgba(255, 255, 255, 0.16);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.booking-cta::after {
+  content: "";
+
+  position: absolute;
+
+  width: 280px;
+  height: 280px;
+
+  right: -150px;
+  bottom: -140px;
+
+  border: 1px solid rgba(255, 255, 255, 0.13);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   63. BOOKING GLOW
+   ========================================================= */
+
+.booking-glow {
+  position: absolute;
+
+  width: 190px;
+  height: 190px;
+
+  top: 50%;
+  left: 50%;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  filter: blur(2px);
+
+  transform: translate(-50%, -50%);
+
+  pointer-events: none;
+
+  animation: bookingGlow 5s ease-in-out infinite;
+}
+
+.booking-glow::before,
+.booking-glow::after {
+  content: "";
+
+  position: absolute;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.booking-glow::before {
+  inset: -45px;
+}
+
+.booking-glow::after {
+  inset: -95px;
+}
+
+@keyframes bookingGlow {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.65;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   64. BOOKING CONTENT
+   ========================================================= */
+
+.booking-content {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 780px;
+
+  text-align: center;
+}
+
+
+/* Booking eyebrow */
+
+.booking-content .eyebrow {
+  color: rgba(255, 255, 255, 0.78);
+
+  margin-bottom: 16px;
+}
+
+.booking-content .eyebrow::before {
+  background: var(--gold-soft);
+}
+
+
+/* =========================================================
+   65. BOOKING HEADING
+   ========================================================= */
+
+.booking-content h2 {
+  margin: 0;
+
+  color: var(--white);
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(58px, 16vw, 110px);
+  font-weight: 500;
+  line-height: 0.84;
+  letter-spacing: -0.055em;
+}
+
+.booking-content h2 em {
+  display: block;
+
+  color: var(--gold-soft);
+
+  font-style: italic;
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   66. BOOKING DESCRIPTION
+   ========================================================= */
+
+.booking-content > p {
+  max-width: 470px;
+
+  margin: 22px auto 0;
+
+  color: rgba(255, 255, 255, 0.82);
+
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   67. BIG BOOK BUTTON
+   ========================================================= */
+
+.big-book-button {
+  width: 100%;
+  max-width: 360px;
+
+  min-height: 60px;
+
+  margin: 30px auto 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+
+  padding: 0 22px;
+
+  background: var(--white);
+
+  border: 1px solid rgba(255, 255, 255, 0.8);
+
+  border-radius: 999px;
+
+  color: var(--pink-700);
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+
+  box-shadow:
+    0 18px 40px rgba(80, 20, 40, 0.2);
+
+  transition:
+    transform 0.35s var(--ease),
+    box-shadow 0.35s ease,
+    background 0.25s ease;
+}
+
+.big-book-button i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 29px;
+  height: 29px;
+
+  border-radius: 50%;
+
+  background: var(--pink-100);
+
+  color: var(--pink-600);
+
+  font-size: 15px;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.3s var(--ease);
+}
+
+.big-book-button:hover {
+  transform: translateY(-5px);
+
+  background: var(--pink-50);
+
+  box-shadow:
+    0 24px 55px rgba(80, 20, 40, 0.25);
+}
+
+.big-book-button:hover i {
+  background: var(--pink-600);
+
+  color: var(--white);
+
+  transform: rotate(-8deg) scale(1.05);
+}
+
+.big-book-button:active {
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   68. BOOKING DETAILS
+   ========================================================= */
+
+.booking-details {
+  width: 100%;
+
+  margin-top: 34px;
+  padding-top: 25px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.booking-details span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  color: rgba(255, 255, 255, 0.82);
+
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.booking-details i {
+  flex: 0 0 auto;
+
+  color: var(--gold-soft);
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   69. FINAL CTA
+   ========================================================= */
+
+.final-cta {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 330px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    75px
+    var(--page-padding)
+    100px;
+
+  background: var(--white);
+
+  border-top: 1px solid var(--border);
+
+  text-align: center;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   70. FINAL CTA DECORATIVE ELEMENTS
+   ========================================================= */
+
+.final-cta::before {
+  content: "";
+
+  position: absolute;
+
+  width: 230px;
+  height: 230px;
+
+  top: -125px;
+  left: 50%;
+
+  border: 1px solid var(--pink-100);
+
+  border-radius: 50%;
+
+  transform: translateX(-50%);
+
+  pointer-events: none;
+}
+
+.final-cta::after {
+  content: "S";
+
+  position: absolute;
+
+  z-index: 0;
+
+  right: -20px;
+  bottom: -75px;
+
+  color: var(--pink-50);
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: 260px;
+  font-weight: 600;
+  line-height: 1;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   71. FINAL LOGO
+   ========================================================= */
+
+.final-logo {
+  position: relative;
+  z-index: 1;
+
+  width: auto;
+  height: 48px;
+  max-width: 190px;
+
+  object-fit: contain;
+
+  margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   72. FINAL CTA TEXT
+   ========================================================= */
+
+.final-cta p {
+  position: relative;
+  z-index: 1;
+
+  margin: 0;
+
+  color: var(--pink-600);
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: 26px;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.2;
+}
+
+
+/* =========================================================
+   73. BACK TO TOP
+   ========================================================= */
+
+.final-cta > a {
+  position: relative;
+  z-index: 1;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  min-height: 43px;
+
+  margin-top: 22px;
+  padding: 0 17px;
+
+  border: 1px solid var(--pink-200);
+  border-radius: 999px;
+
+  background: var(--white);
+
+  color: var(--text);
+
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+
+  box-shadow: 0 8px 25px rgba(80, 35, 50, 0.04);
+
+  transition:
+    transform 0.3s var(--ease),
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.final-cta > a span {
+  color: var(--pink-600);
+
+  font-size: 15px;
+
+  transition: transform 0.3s var(--ease);
+}
+
+.final-cta > a:hover {
+  transform: translateY(-3px);
+
+  background: var(--pink-600);
+
+  border-color: var(--pink-600);
+
+  color: var(--white);
+}
+
+.final-cta > a:hover span {
+  color: var(--white);
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   74. MOBILE BOOKING BAR
+   ========================================================= */
+
+.mobile-booking-bar {
+  position: fixed;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  z-index: 2000;
+
+  min-height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding:
+    9px
+    var(--page-padding)
+    calc(9px + env(safe-area-inset-bottom));
+
+  background: rgba(255, 255, 255, 0.97);
+
+  border-top: 1px solid var(--pink-200);
+
+  box-shadow:
+    0 -10px 35px rgba(80, 35, 50, 0.09);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+
+/* =========================================================
+   75. MOBILE BAR INFO
+   ========================================================= */
+
+.mobile-booking-info {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mobile-booking-info strong {
+  color: var(--text);
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.mobile-booking-info span {
+  color: var(--pink-600);
+
+  font-size: 9px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   76. MOBILE BAR BUTTON
+   ========================================================= */
+
+.mobile-booking-bar > a {
+  flex: 0 0 auto;
+
+  min-height: 45px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 0 18px;
+
+  border-radius: 999px;
+
+  background: var(--pink-600);
+
+  color: var(--white);
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  box-shadow:
+    0 8px 20px rgba(201, 70, 106, 0.2);
+
+  transition:
+    background 0.25s ease,
+    transform 0.3s var(--ease);
+}
+
+.mobile-booking-bar > a span {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.mobile-booking-bar > a:hover {
+  background: var(--pink-700);
+
+  transform: translateY(-2px);
+}
+
+.mobile-booking-bar > a:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   77. PREVENT MOBILE BAR FROM COVERING CONTENT
+   ========================================================= */
+
+body {
+  padding-bottom: 0;
+}
+
+main {
+  padding-bottom: 84px;
+}
+
+
+/* =========================================================
+   78. BOOKING CTA MOBILE REFINEMENT
+   ========================================================= */
+
+@media (max-width: 699px) {
+
+  .booking-cta {
+    min-height: 570px;
+
+    padding:
+      82px
+      var(--page-padding);
+  }
+
+  .booking-content h2 {
+    font-size: clamp(60px, 17vw, 84px);
+  }
+
+  .booking-content > p {
+    font-size: 12px;
+  }
+
+  .big-book-button {
+    min-height: 58px;
+  }
+
+  .booking-details {
+    gap: 12px;
+  }
+
+  .booking-details span {
+    font-size: 8.5px;
+  }
+
+  .final-cta {
+    min-height: 350px;
+
+    padding-bottom: 105px;
+  }
+
+  .final-logo {
+    height: 45px;
+    max-width: 180px;
+  }
+
+  .final-cta p {
+    font-size: 24px;
+  }
+
+  .mobile-booking-bar {
+    min-height: 68px;
+  }
+}
+
+
+/* =========================================================
+   79. SMALL PHONE BOOKING BAR
+   ========================================================= */
+
+@media (max-width: 359px) {
+
+  .mobile-booking-bar {
+    gap: 8px;
+
+    padding-left: 13px;
+    padding-right: 13px;
+  }
+
+  .mobile-booking-info strong {
+    font-size: 8px;
+  }
+
+  .mobile-booking-info span {
+    font-size: 8px;
+  }
+
+  .mobile-booking-bar > a {
+    min-height: 42px;
+
+    padding: 0 14px;
+
+    font-size: 8px;
+  }
+
+  main {
+    padding-bottom: 80px;
+  }
+}
+
+
+/* =========================================================
+   80. TABLET BOOKING CTA
+   ========================================================= */
+
+@media (min-width: 700px) {
+
+  main {
+    padding-bottom: 0;
+  }
+
+  .booking-cta {
+    min-height: 650px;
+
+    padding:
+      120px
+      var(--page-padding);
+  }
+
+  .booking-content h2 {
+    font-size: clamp(80px, 10vw, 125px);
+  }
+
+  .booking-content > p {
+    font-size: 14px;
+  }
+
+  .big-book-button {
+    max-width: 390px;
+
+    min-height: 64px;
+  }
+
+  .booking-details {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 14px 25px;
+  }
+
+  .booking-details span {
+    font-size: 9px;
+  }
+
+  .final-cta {
+    min-height: 380px;
+
+    padding:
+      90px
+      var(--page-padding)
+      100px;
+  }
+
+  .final-logo {
+    height: 53px;
+  }
+
+  .final-cta p {
+    font-size: 29px;
+  }
+
+  .mobile-booking-bar {
+    display: none;
+  }
+}
+
+
+/* =========================================================
+   81. DESKTOP BOOKING CTA
+   ========================================================= */
+
+@media (min-width: 1024px) {
+
+  .booking-cta {
+    min-height: 720px;
+
+    padding:
+      145px
+      var(--page-padding);
+  }
+
+  .booking-content h2 {
+    font-size: clamp(100px, 9vw, 145px);
+  }
+
+  .booking-content > p {
+    margin-top: 27px;
+
+    font-size: 14px;
+  }
+
+  .big-book-button {
+    min-height: 68px;
+
+    margin-top: 36px;
+
+    font-size: 10px;
+  }
+
+  .booking-details {
+    margin-top: 42px;
+
+    padding-top: 28px;
+  }
+
+  .booking-details span {
+    font-size: 9px;
+  }
+
+  .final-cta {
+    min-height: 430px;
+
+    padding-top: 105px;
+    padding-bottom: 115px;
+  }
+
+  .final-logo {
+    height: 58px;
+    max-width: 220px;
+
+    margin-bottom: 22px;
+  }
+
+  .final-cta p {
+    font-size: 32px;
+  }
+
+  .final-cta > a {
+    min-height: 47px;
+
+    margin-top: 25px;
+
+    padding: 0 20px;
+  }
+}
+
+
+/* =========================================================
+   82. LARGE DESKTOP
+   ========================================================= */
+
+@media (min-width: 1400px) {
+
+  .booking-cta {
+    min-height: 760px;
+  }
+
+  .booking-content h2 {
+    font-size: 150px;
+  }
+
+  .final-cta {
+    min-height: 470px;
+  }
+
+  .final-cta::after {
+    right: 40px;
+    bottom: -85px;
+
+    font-size: 300px;
+  }
+}
+
+
+/* =========================================================
+   83. FINAL TOUCH INTERACTIONS
+   ========================================================= */
+
+@media (hover: hover) {
+
+  .booking-content .eyebrow {
+    transition: letter-spacing 0.4s var(--ease);
+  }
+
+  .booking-content:hover .eyebrow {
+    letter-spacing: 0.3em;
+  }
+}
+
+
+/* =========================================================
+   84. REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .booking-glow {
+    animation: none;
+  }
+
+  .big-book-button:hover,
+  .mobile-booking-bar > a:hover,
+  .final-cta > a:hover {
+    transform: none;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
